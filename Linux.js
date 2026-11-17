@@ -53,7 +53,8 @@ function main(config, profileName) {
       "wx.qq.com",
       "dldir1v6.qq.com",
       "multimedia.nt.qq.com.cn",
-      "res.wxqcloud.qq.com.cn"
+      "res.wxqcloud.qq.com.cn",
+      "mcs.zijieapi.com"
   ];
   const ipv4Exceptions = ["broadcast.chat.bilibili.com"];
 
@@ -128,8 +129,10 @@ function main(config, profileName) {
     if (/^RULE-SET,private_domain,DIRECT(?:,|$)/.test(r) && rules.indexOf(r) === -1) rules.push(r);
   });
   ipv4Exceptions.forEach(function(d) { rules.push("DOMAIN," + d + "," + proxyName); });
-  // Pin AgentRouter independently of the primary proxy selector.
+  
   rules.push("DOMAIN-SUFFIX,agentrouter.org,加拿大-IPv6");
+  rules.push("DOMAIN-SUFFIX,ps.air-outer.com,加拿大-IPv6");
+  rules.push("DOMAIN-SUFFIX,chatgpt.com,加拿大-IPv6");
   ipv6Domains.forEach(function(d) { rules.push("DOMAIN-SUFFIX," + d + "," + directName); });
   ipv6ExactDomains.forEach(function(d) { rules.push("DOMAIN," + d + "," + directName); });
   // Retain explicit blocking rules; remove public/China DIRECT rules that fail on IPv4.
