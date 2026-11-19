@@ -7,7 +7,7 @@ function main(config, profileName) {
   // Representative web/API/image/CDN hosts in these families were tested locally.
   const ipv6Domains = [
     "bilibili.com", "biliapi.com", "biliapi.net",
-    "bilivideo.com", "hdslb.com", "biliimg.com", "bilicdn1.com"
+    "bilivideo.com", "hdslb.com", "biliimg.com", "bilicdn1.com", "steamcontent.com"
   ];
   // Exact hosts with verified IPv6 HTTPS connectivity (2026-11-16).
   // Keep untested siblings on the existing proxy fallback.
@@ -36,8 +36,14 @@ function main(config, profileName) {
       "p3-pc-sign.douyinpic.com",
       "lf-douyin-pc-web.douyinstatic.com",
       "v26-web.douyinvod.com",
+      // Exact video-host trials: IPv6 TLS verified; playback requires observation (2026-11-17).
+      "v11-weba.douyinvod.com",
+      "pull-flv-l1.douyincdn.com",
       "gchat.qpic.cn",
       "c2cpicdw.qpic.cn",
+      // Exact-host trial: network/TLS reachable; business resource not verified (2026-11-19).
+      "mpvideo.qpic.cn",
+      "wximg.wxs.qq.com",
       "q1.qlogo.cn",
       "q2.qlogo.cn",
       "q4.qlogo.cn",
@@ -54,7 +60,8 @@ function main(config, profileName) {
       "dldir1v6.qq.com",
       "multimedia.nt.qq.com.cn",
       "res.wxqcloud.qq.com.cn",
-      "mcs.zijieapi.com"
+      "mcs.zijieapi.com",
+      "client-update.akamai.steamstatic.com",
   ];
   const ipv4Exceptions = ["broadcast.chat.bilibili.com"];
 
