@@ -7,7 +7,17 @@ function main(config, profileName) {
   // Representative web/API/image/CDN hosts in these families were tested locally.
   const ipv6Domains = [
     "bilibili.com", "biliapi.com", "biliapi.net",
-    "bilivideo.com", "hdslb.com", "biliimg.com", "bilicdn1.com", "steamcontent.com"
+    "bilivideo.com", "hdslb.com", "biliimg.com", "bilicdn1.com", "steamcontent.com", "pinduoduo.com",
+    // 2026-11-22 suffix trials: network/TLS evidence only; untested subdomains are not business-verified.
+    "weibo.com",
+    "iqiyi.com",
+    "12306.cn",
+    "youku.com",
+    // 2026-11-22 suffix trials: network/TLS evidence only; untested subdomains are not business-verified.
+    "zhihu.com",
+    "taobao.com",
+    "sina.com.cn",
+    "yangkeduo.com"
   ];
   // Exact hosts with verified IPv6 HTTPS connectivity (2026-11-16).
   // Keep untested siblings on the existing proxy fallback.
@@ -62,8 +72,29 @@ function main(config, profileName) {
       "res.wxqcloud.qq.com.cn",
       "mcs.zijieapi.com",
       "client-update.akamai.steamstatic.com",
+      // 2026-11-19 precise-host IPv6 trials: physical IPv6/TLS verified; business flows not verified.
+
+      "www.jd.com",
+      "www.xiaohongshu.com",
+      "www.163.com",
+
   ];
-  const ipv4Exceptions = ["broadcast.chat.bilibili.com"];
+  const ipv4Exceptions = [
+    "broadcast.chat.bilibili.com",
+    // User-requested IPv4/proxy exception; proxy routing, not a hard IPv4 guarantee.
+    "img.pddpic.com",
+    // Campus DNS has A but no AAAA for the apex; keep it on the proxy route.
+    "pinduoduo.com",
+    // 2026-11-22 explicit proxy exceptions: no usable campus AAAA or uncertain/failed direct path.
+    "app.12306.cn",
+    "passport.youku.com",
+    // 2026-11-22 explicit proxy exceptions: no usable campus AAAA or uncertain/failed direct path.
+    "zhihu.com",
+    "login.taobao.com",
+    "sina.com.cn",
+    "yangkeduo.com",
+    "img.yangkeduo.com"
+  ];
 
   const originalRules = Array.isArray(config.rules) ? config.rules : [];
   const groups = Array.isArray(config["proxy-groups"]) ? config["proxy-groups"] : [];
@@ -140,6 +171,7 @@ function main(config, profileName) {
   rules.push("DOMAIN-SUFFIX,agentrouter.org,加拿大-IPv6");
   rules.push("DOMAIN-SUFFIX,ps.air-outer.com,加拿大-IPv6");
   rules.push("DOMAIN-SUFFIX,chatgpt.com,加拿大-IPv6");
+  rules.push("DOMAIN-SUFFIX,openai.com,加拿大-IPv6");
   ipv6Domains.forEach(function(d) { rules.push("DOMAIN-SUFFIX," + d + "," + directName); });
   ipv6ExactDomains.forEach(function(d) { rules.push("DOMAIN," + d + "," + directName); });
   // Retain explicit blocking rules; remove public/China DIRECT rules that fail on IPv4.
